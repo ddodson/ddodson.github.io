@@ -1,21 +1,32 @@
-# jsrproject1 - Chatbot!
+# Chatbot!
 
-##Project 1 for Javascript Class through General Assembly
+## Our favorite AI nemesis, HAL9000 vs. Dave Bowman
 
-* JSR Project 1 to create a chatbot based on the HAL9000.  
-* I have also incorporated answers that reflect combining the Dave's not here skit from Cheech and Chong 
-* This was inspired by the following video.
+* Construct a chatbot that responds to various inputs from Dave
+* Feel free to use the HTML and CSS scaffolds or construct your own
+* Be creative with your logic and responses!
+* Feel free to also change the characters and anything in the starter code—be creative!
 
-* https://www.youtube.com/watch?v=LcjjsQd1C5Y
+## Grading Rubric (Pass/Partial/Fail)
 
-## What Hal responds to
+### Required
 
-* Any question with the words 'door', 'jar', 'open', 'I've got the stuff' and 
-* your own name as you typed it in initially will return a response.  
-* It may not be the most helpful response, but, like the Beastie Boys said, never trust a HAL9000.
+* Have the AI respond to user input
+* Do at least 3 different things
+* One of the commands must utilize the list of people in the class to send a reply
+* Use at least 1 conditional to change the response
+* Leverage a for loop to iterate over a collection
+* Use a random component
+* Go above and beyond simple `if/else` statements
 
-## Unsolved
+### Stretch Goals
 
-* I did not see a good use for RegEx that would not have involved trying to create a new problem 
-* that was outside of the scope of the project.
-* I was interested in using a Switch Case statement, but the looping logic seemed like a more efficient approach.
+* Have 2 or more AIs responding based upon user input
+* Use a regular expression to parse and manipulate the response
+* Have a conversation between two AIs (without creating an infinite loop!)
+
+## Deliverables
+
+* A working chatbot hosted somewhere publicly accessible (CodePen, Github Pages, etc.)
+* A new git respository containing your code
+* A `README.md` file with explanations of what your bot does, what commands it responds to, the approach taken, unsolved problems, etc.
