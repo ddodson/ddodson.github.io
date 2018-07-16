@@ -9,14 +9,63 @@
 function myMap() {
   var myCenter = new google.maps.LatLng(41, -80);
   var mapCanvas = document.getElementById("map");
-  var mapOptions = {center: myCenter, zoom: 6};
+  var mapOptions = {
+    center: myCenter, 
+    zoom: 6,
+  };
   var map = new google.maps.Map(mapCanvas, mapOptions);
-  var marker = new google.maps.Marker({
+  var marker0803 = new google.maps.Marker({
     position: myCenter,
-    animation: google.maps.Animation.BOUNCE,
-	icon:'images/touricon.png'
+    animation: google.maps.Animation.DROP,
+    icon:'images/icontiny.png',
+    position: {lat: 39.9831403, lng: -83.2710211}
   });
-  marker.setMap(map);
+  var marker0804 = new google.maps.Marker({
+    position: myCenter,
+    animation: google.maps.Animation.DROP,
+    icon:'images/icontiny.png',
+    position: {lat: 41.4977042, lng: -81.8459456}
+  });
+  var marker0805 = new google.maps.Marker({
+    position: myCenter,
+    animation: google.maps.Animation.DROP,
+    icon:'images/icontiny.png',
+    position: {lat: 42.348941, lng: -83.0644807}
+  });
+  var marker0807 = new google.maps.Marker({
+    position: myCenter,
+    animation: google.maps.Animation.DROP,
+    icon:'images/icontiny.png',
+    position: {lat: 42.3528795, lng: -83.2392906}
+  });
+  var marker0811 = new google.maps.Marker({
+    position: myCenter,
+    animation: google.maps.Animation.DROP,
+    icon:'images/icontiny.png',
+    position: {lat: 39.1218698, lng: -84.5334866}
+  });
+  var marker0812 = new google.maps.Marker({
+    position: myCenter,
+    animation: google.maps.Animation.DROP,
+    icon:'images/icontiny.png',
+    position: {lat: 40.008639, lng: -83.0002007}
+  });
+  var marker0814 = new google.maps.Marker({
+    position: myCenter,
+    animation: google.maps.Animation.DROP,
+    icon:'images/icontiny.png',
+    position: {lat: 42.1232118, lng: -80.0849867}
+  });
+
+  marker.addListener('click', toggleBounce);
+  
+  marker0803.setMap(map);
+  marker0804.setMap(map);
+  marker0805.setMap(map);
+  marker0807.setMap(map);
+  marker0811.setMap(map);
+  marker0812.setMap(map);
+  marker0814.setMap(map);
 }
 </script>
 
