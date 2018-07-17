@@ -221,6 +221,12 @@ function myMap() {
       '<h1 id="firstHeading'+i+'" class="firstHeading">'+title+'</h1>'+
       '<h2 id="secondHeading'+i+'" class="secondHeading">'+venue_info+'</h2>'+address+
       '<div id="bodyContent"><p>line up: '+lineup+'<br>'+fb+'</p>'+
+      '<br><a href="https://www.youtube.com/playlist?list=PLrq41F0tYwHN5kme6ADOnDBYIy3loveGH" target="_blank">Video</a>'+
+      '<br>Audio: <a href="https://voidstarproductions.bandcamp.com/" target="_blank">Voidstar Productions</a>, '+
+      '<a href="https://abstinence-hell.bandcamp.com/" target="_blank">Abstinence</a>, '+
+      '<a href="https://voidstarproductions.bandcamp.com/album/first-blast" target="_blank">Nau-Zee-auN</a>, '+
+      '<a href="https://voidstarproductions.bandcamp.com/album/not-today-2007-2015" target="_blank">Freeze Etch</a>, '+
+      '<a href="https://voidstarproductions.bandcamp.com/album/tribe" target="_blank">Tactil Vision</a>, more coming soon'+
       '<a href="'+tour_stop_data[i].flier+'" target="_lank"><img src="'+tour_stop_data[i].flier+'" height="200"></a>'+
       '</div></div>';
 
