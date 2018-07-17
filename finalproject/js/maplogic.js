@@ -202,17 +202,42 @@ function myMap() {
   var map = new google.maps.Map(mapCanvas, mapOptions);
   var markers = [];
   var coordinates = [];
+  var contentString = [];
 
   for (var i = 0; i < tour_stop_data.length; i++) {
     coordinates[i] = { lat: tour_stop_data[i].lat, lng: tour_stop_data[i].lng };
+    var title = tour_stop_data[i].date+': '+tour_stop_data[i].city+', '+tour_stop_data[i].state;
+    var lineup = '';
+    var prefix = '';
+    for (var j = 0; j < tour_stop_data[i].performers.length; j++) {
+      lineup += prefix + '<b>' + tour_stop_data[i].performers[i] + '</b>';
+      prefix = ', ';
+    }
+
+    //on click popup bubble
+    contentString[i] = '<div id="content" style="background-color:#000;"><div id="siteNotice"></div>'+
+      '<h1 id="firstHeading'+i+'" class="firstHeading">'+title+'</h1>'+
+      '<h2 id="secondHeading'+i+'" class="secondHeading"><a href="'+tour_stop_data[i].venue.website+'">'+tour_stop_data[i].venue.name+'</a></h2>'+
+      '<p>address: '+tour_stop_data[i].venue.address+'</p>'
+      '<div id="bodyContent"><p>line up: '+lineup+'</p><img src="'+tour_stop_data[i].flier+"'></div></div>";
+
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString[i],
+    });
+
     markers[i] = new google.maps.Marker({
       animation: google.maps.Animation.DROP,
       icon:'images/icontiny.png',
-      position: coordinates[i]
-  });
+      position: coordinates[i],
+      map: map,
+      title: title,
+    });
 
-  markers[i].setMap(map);
-//  markers[i].addListener('click', toggleBounce);
+    markers[i].setMap(map);
+
+    markers[i].addListener('click', function() {
+      infowindow.open(map, markers[i]);
+    });
   }
 
   var line = new google.maps.Polyline({
@@ -235,6 +260,42 @@ function myMap() {
   path.setMap(map);
 
   animate(line);
+
+/*  var contentString = '<div id="content" style="background-color:#000;">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+      '<div id="bodyContent">'+
+      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+      'sandstone rock formation in the southern part of the '+
+      'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+      'south west of the nearest large town, Alice Springs; 450&#160;km '+
+      '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+      'Aboriginal people of the area. It has many springs, waterholes, '+
+      'rock caves and ancient paintings. Uluru is listed as a World '+
+      'Heritage Site.</p>'+
+      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+      '(last visited June 22, 2009).</p>'+
+      '</div>'+
+      '</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString,
+  });
+
+  var marker = new google.maps.Marker({
+    position: {lat: 41, lng: -80.0849867},
+    map: map,
+    title: 'Uluru (Ayers Rock)'
+  });
+
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
+*/
 }
 
 function animate(line) {
