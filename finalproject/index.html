@@ -1,172 +1,157 @@
 <!DOCTYPE html>
 <html>
-
 <body>
-
 <div id="map" style="width:100%;height:500px"></div>
-
 <script>
+var tour_stop_data = [
+    {
+	    date: new Date(2018, 08, 03, 00, 00, 00, 00),
+	    lat: 39.9831403,
+	    lng: -83.2710211,
+	    city: 'Columbus',
+	    state: 'OH',
+	    venue: {},
+	    fb: '',
+	    performers: ['Tactil Vision', 'Freeze Etch', 'Architect', 'Textbeak']
+	},
+    {
+    	date: new Date(2018, 08, 04, 00, 00, 00, 00),
+    	lat: 41.4977042,
+    	lng: -81.8459456,
+	    city: 'Cleveland',
+	    state: 'OH',
+	    venue: {},
+	    fb: '',
+	    performers: ['Abstinence','Nau-Zee-auN','Tactil Vision','Red Pyramid','Textbeak']
+    },
+    {
+    	date: new Date(2018, 08, 05, 00, 00, 00, 00),
+    	lat: 42.348941,
+    	lng: -83.0644807,
+	    city: 'Detroit',
+	    state: 'MI',
+	    venue: {
+	    	name: 'The Old Miami',
+	    	address: '3930 Cass Ave, Detroit, Michigan 48201',
+	    	phone: '(313) 831-3830',
+	    },
+	    fb: '',
+	    performers: ['Abstinence','Nau-Zee-auN','Journey to the Center of the Colon','Freeze Etch','Fluxion A/D','S.A.P.','DJ Nemesis']
+    },
+    {
+    	date: new Date(2018, 08, 07, 00, 00, 00, 00),
+    	lat: 42.3528795,
+    	lng: -83.2392906,
+	    city: 'Detroit',
+	    state: 'MI',
+	    venue: {
+	    	name: 'Detroit Industrial Underground promo spot',
+	    	address: 'tba',
+	    	phone: '',
+	    },
+	    fb: '',
+	    performers: ['Abstinence','Nau-Zee-auN']
+    },
+    {
+    	date: new Date(2018, 08, 11, 00, 00, 00, 00),
+    	lat: 39.1218698,
+    	lng: -84.5334866,
+	    city: 'Cincinnati',
+	    state: 'OH',
+	    venue: {
+	    	name: 'The Mockbee',
+	    	address: '2260 Central Pkwy, Cincinnati, OH 45214',
+	    	phone: '(513) 621-1900',
+	    },
+	    fb: 'https://www.facebook.com/events/394109257765788/',
+	    performers: ['Abstinence','Nau-Zee-auN','Journey to the Center of the Colon','Tactil Vision','Freeze Etch','Decide Today','Divtech']
+    },
+    {
+    	date: new Date(2018, 08, 12, 00, 00, 00, 00),
+    	lat: 40.008639,
+    	lng: -83.0002007,
+	    city: 'Columbus',
+	    state: 'OH',
+	    venue: {
+	    	name: 'Cafe Bourbon Street',
+	    	address: '2216 Summit St, Columbus, OH 43201',
+	    	phone: '(614) 725-5256',
+	    	website: 'cafebourbonstreet.com',
+	    },
+	    fb: 'https://www.facebook.com/events/353554445173582/',
+	    performers: ['Abstinence','Nau-Zee-auN','Tactil Vision','Red Pyramid','Curse of Cassandra']
+    },
+    {
+    	date: new Date(2018, 08, 14, 00, 00, 00, 00),
+    	lat: 42.1232118,
+    	lng: -80.0849867,
+	    city: 'Erie',
+	    state: 'PA',
+	    venue: {
+	    	name: 'Basement Transmissions Concert Hall',
+	    	address: '145 W 11th St, Erie, PA 16501',
+	    	phone: '(814) 520-8328',
+	    },
+	    fb: 'https://www.facebook.com/events/394109257765788/',
+	    performers: ['Abstinence','Nau-Zee-auN','Journey to the Center of the Colon','Tactil Vision','Greyscape']
+    }
+];
+
 function myMap() {
-  var myCenter = new google.maps.LatLng(41, -80);
   var mapCanvas = document.getElementById("map");
   var mapOptions = {
-    center: myCenter, 
-    zoom: 6,
+    center: new google.maps.LatLng(41, -82),
+    zoom: 7,
   };
   var map = new google.maps.Map(mapCanvas, mapOptions);
-  var marker0803 = new google.maps.Marker({
-    position: myCenter,
-    animation: google.maps.Animation.DROP,
-    icon:'images/icontiny.png',
-    position: {lat: 39.9831403, lng: -83.2710211}
-  });
-  var marker0804 = new google.maps.Marker({
-    position: myCenter,
-    animation: google.maps.Animation.DROP,
-    icon:'images/icontiny.png',
-    position: {lat: 41.4977042, lng: -81.8459456}
-  });
-  var marker0805 = new google.maps.Marker({
-    position: myCenter,
-    animation: google.maps.Animation.DROP,
-    icon:'images/icontiny.png',
-    position: {lat: 42.348941, lng: -83.0644807}
-  });
-  var marker0807 = new google.maps.Marker({
-    position: myCenter,
-    animation: google.maps.Animation.DROP,
-    icon:'images/icontiny.png',
-    position: {lat: 42.3528795, lng: -83.2392906}
-  });
-  var marker0811 = new google.maps.Marker({
-    position: myCenter,
-    animation: google.maps.Animation.DROP,
-    icon:'images/icontiny.png',
-    position: {lat: 39.1218698, lng: -84.5334866}
-  });
-  var marker0812 = new google.maps.Marker({
-    position: myCenter,
-    animation: google.maps.Animation.DROP,
-    icon:'images/icontiny.png',
-    position: {lat: 40.008639, lng: -83.0002007}
-  });
-  var marker0814 = new google.maps.Marker({
-    position: myCenter,
-    animation: google.maps.Animation.DROP,
-    icon:'images/icontiny.png',
-    position: {lat: 42.1232118, lng: -80.0849867}
+  var markers = [];
+  var coordinates = [];
+
+  for (var i = 0; i < tour_stop_data.length; i++) {
+	coordinates[i] = { lat: tour_stop_data[i].lat, lng: tour_stop_data[i].lng };
+  	markers[i] = new google.maps.Marker({
+  		animation: google.maps.Animation.DROP,
+	    icon:'images/icontiny.png',
+	    position: coordinates[i]
+	});
+
+	markers[i].setMap(map);
+//	markers[i].addListener('click', toggleBounce);
+  }
+
+  var line = new google.maps.Polyline({
+    path: coordinates,
+    icons: [{
+      icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 2, strokeColor: '#f00'},
+      offset: '100%'
+    }],
+    map: map,
   });
 
-  marker.addListener('click', toggleBounce);
-  
-  marker0803.setMap(map);
-  marker0804.setMap(map);
-  marker0805.setMap(map);
-  marker0807.setMap(map);
-  marker0811.setMap(map);
-  marker0812.setMap(map);
-  marker0814.setMap(map);
+  var path = new google.maps.Polyline({
+    path: coordinates,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 5,
+  });
+
+  path.setMap(map);
+
+  animate(line);
+}
+
+function animate(line) {
+    var count = 0;
+    window.setInterval(function() {
+      count = (count + 1) % 200;
+
+      var icons = line.get('icons');
+      icons[0].offset = (count / 2) + '%';
+      line.set('icons', icons);
+  }, 30);
 }
 </script>
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXWZV0V1d7ZfpjKHS1tuotdxWYRfIMzvI&callback=myMap"></script>
-<!--
-To use this code on your website, get a free API key from Google.
-Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
--->
-
 </body>
 </html>
-<!--
-//tour details
-
-August 3
-Columbus OH
-39.9831403,-83.2710211
-
-August 4
-Cleveland OH
-41.4977042,-81.8459456
-
-August 5
-https://www.facebook.com/events/214215376042196/
-The Old Miami
-3930 Cass Ave, Detroit, Michigan 48201
-(313) 831-3830
-42.348941,-83.0644807
-
-August 7
-Detroit Industrial Underground promo spot
-42.3528795,-83.2392906
-
-August 11
-https://www.facebook.com/events/394109257765788/
-pin
-The Mockbee
-2260 Central Pkwy, Cincinnati 45214
-(513) 621-1900
-39.1218698,-84.5334866
-
-August 12
-https://www.facebook.com/events/353554445173582/
-Cafe Bourbon Street
-2216 Summit St, Columbus, OH 43201
-cafebourbonstreet.com
-(614) 725-5256
-40.008639,-83.0002007
-
-August 14
-Basement Transmissions Concert Hall
-145 W 11th St, Erie, PA 16501
-(814) 520-8328
-42.1232118,-80.0849867
-
--->
-
-
-<!--
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1>My First Google Map</h1>
-
-<div id="googleMap" style="width:100%;height:400px;"></div>
-
-<script>
-function myMap() {
-//	var mapProp= {
-//	    center:new google.maps.LatLng(41,-80),
-//	    zoom:6,
-//	    mapTypeId: google.maps.MapTypeId.ROADMAP,
-//	    mapTypeId: google.maps.MapTypeId.TERRAIN,
-//	    mapTypeId: google.maps.MapTypeId.HYBRID,
-//	    mapTypeId: google.maps.MapTypeId.SATELLITE,
-//	};
-
-  var myCenter = new google.maps.LatLng(41, -80);
-  var mapCanvas = document.getElementById("map");
-  var mapOptions = {
-  	center: myCenter,
-  	zoom: 6,
-  //	mapTypeId: google.maps.MapTypeId.HYBRID,
-  };
-  var map = new google.maps.Map(mapCanvas, mapOptions);
-
-//	var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-
-  var marker = new google.maps.Marker({position:myCenter});
-  marker.setMap(map);
-
-}
-</script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXWZV0V1d7ZfpjKHS1tuotdxWYRfIMzvI&callback=myMap"></script>
-
-</body>
-</html>
-<!--
-custom markers
-animate travel
-light up regions
--->
