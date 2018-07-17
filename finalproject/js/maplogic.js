@@ -72,7 +72,7 @@ var tour_stop_data = [{
       name: 'Cafe Bourbon Street',
       address: '2216 Summit St, Columbus, OH 43201',
       phone: '(614) 725-5256',
-      website: 'cafebourbonstreet.com',
+      website: 'http://cafebourbonstreet.com',
     },
     fb: 'https://www.facebook.com/events/353554445173582/',
     performers: ['Abstinence','Nau-Zee-auN','Tactil Vision','Red Pyramid','Curse of Cassandra'],
@@ -111,73 +111,59 @@ function myMap() {
         featureType: 'administrative.locality',
         elementType: 'labels.text.fill',
         stylers: [{color: '#aaaaaa'}]
-      },
-      {
+      },{
         featureType: 'poi',
         elementType: 'labels.text.fill',
         stylers: [{color: '#ff55FF'}]
-      },
-      {
+      },{
         featureType: 'poi.park',
         elementType: 'geometry',
         stylers: [{color: '#009900'}]
-      },
-      {
+      },{
         featureType: 'poi.park',
         elementType: 'labels.text.fill',
         stylers: [{color: '#00FF00'}]
-      },
-      {
+      },{
         featureType: 'road',
         elementType: 'geometry',
         stylers: [{color: '#334444'}]
-      },
-      {
+      },{
         featureType: 'road',
         elementType: 'geometry.stroke',
         stylers: [{color: '#0000FF'}]
-      },
-      {
+      },{
         featureType: 'road',
         elementType: 'labels.text.fill',
         stylers: [{color: '#AAAAAA'}]
-      },
-      {
+      },{
         featureType: 'road.highway',
         elementType: 'geometry',
         stylers: [{color: '#00FF00'}]
-      },
-      {
+      },{
         featureType: 'road.highway',
         elementType: 'geometry.stroke',
         stylers: [{color: '#0000FF'}]
-      },
-      {
+      },{
         featureType: 'road.highway',
         elementType: 'labels.text.fill',
         stylers: [{color: '#ffffff'}]
-      },
-      {
+      },{
         featureType: 'transit',
         elementType: 'geometry',
         stylers: [{color: '#FFFF00'}]
-      },
-      {
+      },{
         featureType: 'transit.station',
         elementType: 'labels.text.fill',
         stylers: [{color: '#9966FF'}]
-      },
-      {
+      },{
         featureType: 'water',
         elementType: 'geometry',
         stylers: [{color: '#6666ff'}]
-      },
-      {
+      },{
         featureType: 'water',
         elementType: 'labels.text.fill',
         stylers: [{color: '#ffffff'}]
-      },
-      {
+      },{
         featureType: 'water',
         elementType: 'labels.text.stroke',
         stylers: [{color: '#FF0000'}]
@@ -200,23 +186,44 @@ function myMap() {
 
     //build line up string
     for (var j = 0; j < tour_stop_data[i].performers.length; j++) {
-      lineup += prefix + '<b>' + tour_stop_data[i].performers[i] + '</b>';
+      lineup += prefix + '<b>' + tour_stop_data[i].performers[j] + '</b>';
       prefix = ', ';
     }
 
+    var address = '';
+    var venue_info = '';
+    var venue_url = '';
+    var link_end = '';
+    var fb = '';
+
+    if((tour_stop_data[i].venue.address != '') && (typeof tour_stop_data[i].venue.address != 'undefined')){
+      var address = '<p>address: '+tour_stop_data[i].venue.address+'</p>';
+    }
+
+    if((tour_stop_data[i].venue !== {}) && (typeof tour_stop_data[i].venue != 'undefined')){
+      if((tour_stop_data[i].venue.website !== '') && (typeof tour_stop_data[i].venue.website != 'undefined')){
+        venue_url = '<a href="'+tour_stop_data[i].venue.website+'" target="_blank">';
+        link_end = '</a>';
+      }
+      
+      venue_info = venue_url+tour_stop_data[i].venue.name+link_end;
+      
+      if(venue_info == 'undefined'){ 
+        venue_info = 'tbd'; 
+      }
+    }
+
+    if((tour_stop_data[i].fb !== '') && (typeof tour_stop_data[i].fb != 'undefined')){
+      fb = '<a href="'+tour_stop_data[i].fb+'" target="_blank">Facebook Event Page</a>';
+    }
     //on click popup bubble
     contentString[i] = '<div id="content" style="background-color:#000;"><div id="siteNotice"></div>'+
       '<h1 id="firstHeading'+i+'" class="firstHeading">'+title+'</h1>'+
-      '<h2 id="secondHeading'+i+'" class="secondHeading">'+
-      '<a href="'+tour_stop_data[i].venue.website+'">'+tour_stop_data[i].venue.name+'</a></h2>'+
-      '<p>address: '+tour_stop_data[i].venue.address+'</p>'
-      '<div id="bodyContent"><p>line up: '+lineup+'</p><img src="'+tour_stop_data[i].flier+"'></div></div>";
+      '<h2 id="secondHeading'+i+'" class="secondHeading">'+venue_info+'</h2>'+address+
+      '<div id="bodyContent"><p>line up: '+lineup+'<br>'+fb+'</p>'+
+      '<a href="'+tour_stop_data[i].flier+'" target="_lank"><img src="'+tour_stop_data[i].flier+'" height="200"></a>'+
+      '</div></div>';
 
-/*
-    infowindow[i] = new google.maps.InfoWindow({
-      content: contentString[i],
-    });
-*/
     infoWindow[i] = new google.maps.InfoWindow(), marker, i;
 
     markers[i] = new google.maps.Marker({
@@ -228,11 +235,6 @@ function myMap() {
     });
 
     markers[i].setMap(map);
-/*    markers[i].addListener('click', function() {
-      var _i = i;
-      infowindow[_i].open(map, markers[_i]);
-    });
-*/
 
     // Allow each marker to have an info window    
     google.maps.event.addListener(markers[i], 'click', (function(marker, i, contentString) {
@@ -258,19 +260,10 @@ function myMap() {
     strokeWeight: 5,
   });
 
-  var path = new google.maps.Polyline({
-    path: coordinates,
-
-    geodesic: true,
-    strokeColor: '#FF0000',
-    strokeOpacity: 1.0,
-    strokeWeight: 5,
-  });
-
   line.setMap(map);
 
   animate(line);
-}
+}//end of myMap Function
 
 /**
  * animate Makes the arrow travel from show to show in chronological order on a loop.
