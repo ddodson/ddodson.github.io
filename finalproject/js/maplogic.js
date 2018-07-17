@@ -14,7 +14,7 @@
  */
 var tour_stop_data = [
     {
-      date: new Date(2018, 08, 03, 00, 00, 00, 00),
+      date: new Date(2018, 07, 03, 00, 00, 00, 00),
       lat: 39.9831403,
       lng: -83.2710211,
       city: 'Columbus',
@@ -25,7 +25,7 @@ var tour_stop_data = [
       flier: 'images/0803.jpg',
     },
     {
-      date: new Date(2018, 08, 04, 00, 00, 00, 00),
+      date: new Date(2018, 07, 04, 00, 00, 00, 00),
       lat: 41.4977042,
       lng: -81.8459456,
       city: 'Cleveland',
@@ -36,7 +36,7 @@ var tour_stop_data = [
       flier: 'images/default.jpg',
     },
     {
-      date: new Date(2018, 08, 05, 00, 00, 00, 00),
+      date: new Date(2018, 07, 05, 00, 00, 00, 00),
       lat: 42.348941,
       lng: -83.0644807,
       city: 'Detroit',
@@ -50,8 +50,10 @@ var tour_stop_data = [
       performers: ['Abstinence','Nau-Zee-auN','Journey to the Center of the Colon','Freeze Etch','Fluxion A/D','S.A.P.','DJ Nemesis'],
       flier: 'images/0805.jpg',
     },
+/*
+    //unconfirmed date to uncomment if secured
     {
-      date: new Date(2018, 08, 07, 00, 00, 00, 00),
+      date: new Date(2018, 07, 07, 00, 00, 00, 00),
       lat: 42.3528795,
       lng: -83.2392906,
       city: 'Detroit',
@@ -64,9 +66,9 @@ var tour_stop_data = [
       fb: '',
       performers: ['Abstinence','Nau-Zee-auN'],
       flier: 'images/default.jpg',
-    },
+    }, */
     {
-      date: new Date(2018, 08, 11, 00, 00, 00, 00),
+      date: new Date(2018, 07, 11, 00, 00, 00, 00),
       lat: 39.1218698,
       lng: -84.5334866,
       city: 'Cincinnati',
@@ -81,7 +83,7 @@ var tour_stop_data = [
       flier: 'images/0811.jpg',
     },
     {
-      date: new Date(2018, 08, 12, 00, 00, 00, 00),
+      date: new Date(2018, 07, 12, 00, 00, 00, 00),
       lat: 40.008639,
       lng: -83.0002007,
       city: 'Columbus',
@@ -97,7 +99,7 @@ var tour_stop_data = [
       flier: 'images/0812.jpg',
     },
     {
-      date: new Date(2018, 08, 14, 00, 00, 00, 00),
+      date: new Date(2018, 07, 14, 00, 00, 00, 00),
       lat: 42.1232118,
       lng: -80.0849867,
       city: 'Erie',
@@ -115,6 +117,7 @@ var tour_stop_data = [
 
 function myMap() {
   var mapCanvas = document.getElementById("map");
+
   var mapOptions = {
     center: new google.maps.LatLng(41, -82),
     zoom: 7,
@@ -199,16 +202,20 @@ function myMap() {
       }
     ]
   };
+
   var map = new google.maps.Map(mapCanvas, mapOptions);
   var markers = [];
   var coordinates = [];
   var contentString = [];
+  var infowindow = [];
 
   for (var i = 0; i < tour_stop_data.length; i++) {
     coordinates[i] = { lat: tour_stop_data[i].lat, lng: tour_stop_data[i].lng };
-    var title = tour_stop_data[i].date+': '+tour_stop_data[i].city+', '+tour_stop_data[i].state;
+    var title = tour_stop_data[i].date.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })+': '+tour_stop_data[i].city+', '+tour_stop_data[i].state;
     var lineup = '';
     var prefix = '';
+
+    //build line up string
     for (var j = 0; j < tour_stop_data[i].performers.length; j++) {
       lineup += prefix + '<b>' + tour_stop_data[i].performers[i] + '</b>';
       prefix = ', ';
@@ -217,11 +224,12 @@ function myMap() {
     //on click popup bubble
     contentString[i] = '<div id="content" style="background-color:#000;"><div id="siteNotice"></div>'+
       '<h1 id="firstHeading'+i+'" class="firstHeading">'+title+'</h1>'+
-      '<h2 id="secondHeading'+i+'" class="secondHeading"><a href="'+tour_stop_data[i].venue.website+'">'+tour_stop_data[i].venue.name+'</a></h2>'+
+      '<h2 id="secondHeading'+i+'" class="secondHeading">'+
+      '<a href="'+tour_stop_data[i].venue.website+'">'+tour_stop_data[i].venue.name+'</a></h2>'+
       '<p>address: '+tour_stop_data[i].venue.address+'</p>'
       '<div id="bodyContent"><p>line up: '+lineup+'</p><img src="'+tour_stop_data[i].flier+"'></div></div>";
 
-    var infowindow = new google.maps.InfoWindow({
+    infowindow[i] = new google.maps.InfoWindow({
       content: contentString[i],
     });
 
@@ -234,30 +242,37 @@ function myMap() {
     });
 
     markers[i].setMap(map);
-
     markers[i].addListener('click', function() {
-      infowindow.open(map, markers[i]);
+      var _i = i;
+      infowindow[_i].open(map, markers[_i]);
     });
-  }
+  }//end of for loop
 
+  //create travel path and animated arrow
   var line = new google.maps.Polyline({
     path: coordinates,
     icons: [{
-      icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 2, strokeColor: '#f00'},
+      icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 3, strokeColor: '#fff'},
       offset: '100%'
     }],
     map: map,
-  });
-
-  var path = new google.maps.Polyline({
-    path: coordinates,
     geodesic: true,
     strokeColor: '#FF0000',
     strokeOpacity: 1.0,
     strokeWeight: 5,
   });
 
-  path.setMap(map);
+  var path = new google.maps.Polyline({
+    path: coordinates,
+
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 5,
+  });
+
+//  path.setMap(map);
+  line.setMap(map);
 
   animate(line);
 
